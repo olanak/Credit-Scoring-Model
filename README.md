@@ -83,7 +83,7 @@ To run the project locally, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/credit-scoring-model.git
+   git clone https://github.com/olanak/credit-scoring-model.git
    cd credit-scoring-model
    ```
 
@@ -102,8 +102,8 @@ To run the project locally, follow these steps:
    - Replace `YOUR_MODEL_FILE_ID` and `YOUR_SCALER_FILE_ID` with the actual file IDs from Google Drive.
    - Use the following commands to download the models:
      ```bash
-     gdown https://drive.google.com/uc?id=YOUR_MODEL_FILE_ID -O models/best_random_forest_model.pkl
-     gdown https://drive.google.com/uc?id=YOUR_SCALER_FILE_ID -O models/scaler.pkl
+     gdown https://drive.google.com/uc?id=1TV29ZdUREXSB3rnX1mxbiLeKnV1H9BTj -O models/best_random_forest_model.pkl
+     gdown https://drive.google.com/uc?id=1IsZ3ed0tGfjnK_wnrSFyrFaX_bN9Msoc -O models/scaler.pkl
      ```
 
 5. **Run the API**:
@@ -193,18 +193,6 @@ This project was developed as part of the 10 Academy Week 6 Challenge. Contribut
    - [Flask Documentation](https://flask.palletsprojects.com/en/2.3.x/)
    - [Render Deployment Guide](https://render.com/docs/deploy-flask)
 
----
-
-## **Screenshots**
-Include screenshots of the frontend and backend responses here to demonstrate the functionality.
-
-![Frontend Screenshot](static/images/frontend.png)  
-*Figure 1: Credit Scoring App Frontend*
-
-![API Response](static/images/api_response.png)  
-*Figure 2: Sample API Response*
-
----
 
 ## **Future Work**
 1. **Improve Model Interpretability**:
@@ -221,7 +209,7 @@ Include screenshots of the frontend and backend responses here to demonstrate th
 ## **Contact**
 For questions or feedback, feel free to reach out:
 - Email: your-email@example.com
-- LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/in/your-profile)
+- LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/in/olana-kenea)
 
 ---
 
