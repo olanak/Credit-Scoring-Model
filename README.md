@@ -127,7 +127,7 @@ To run the project locally, follow these steps:
 - Use the `/predict` endpoint to send POST requests with JSON input data.
 - Example request:
   ```bash
-  curl -X POST https://credit-scoring-api.onrender.com/predict \
+  curl -X POST https://credit-scoring-model-backend.onrender.com//predict \
   -H "Content-Type: application/json" \
   -d '[
       {
