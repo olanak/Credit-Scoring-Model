@@ -11,8 +11,8 @@ from sklearn.preprocessing import StandardScaler
 app = Flask(__name__)
 
 # Load the model and scaler from Google Drive
-MODEL_URL = "https://drive.google.com/uc?id=1TV29ZdUREXSB3rnX1mxbiLeKnV1H9BTj"
-SCALER_URL = "https://drive.google.com/uc?id=1IsZ3ed0tGfjnK_wnrSFyrFaX_bN9Msoc"
+MODEL_URL = "https://drive.google.com/uc?id=1IsZ3ed0tGfjnK_wnrSFyrFaX_bN9Msoc"
+SCALER_URL = "https://drive.google.com/uc?id=1TV29ZdUREXSB3rnX1mxbiLeKnV1H9BTj"
 
 # Define paths for model and scaler
 model_path = "best_random_forest_model.pkl"
