@@ -29,6 +29,10 @@ if not os.path.exists(scaler_path):
 model = joblib.load(model_path)
 scaler = joblib.load(scaler_path)
 
+# Check model and scaler types for debugging
+print(f"Model type: {type(model)}")
+print(f"Scaler type: {type(scaler)}")
+
 # Root route to confirm API is live
 @app.route('/', methods=['GET'])
 def home():
@@ -55,13 +59,25 @@ def predict():
         if missing_features:
             return jsonify({'error': f'Missing required features: {missing_features}'}), 400
 
+        # Debugging - print input data before scaling
+        print(f"Input data before scaling:\n{input_df[numeric_features]}")
+
         # Scale numeric features using the scaler
         if scaler:
-            # Ensure the input is in the correct shape for scaling
-            input_df[numeric_features] = scaler.transform(input_df[numeric_features].values.reshape(-1, len(numeric_features)))
+            try:
+                # Ensure the input data is a 2D array
+                input_df[numeric_features] = scaler.transform(input_df[numeric_features].values)
+            except Exception as e:
+                return jsonify({'error': f'Scaling error: {str(e)}'}), 400
+
+        # Debugging - print input data after scaling
+        print(f"Input data after scaling:\n{input_df[numeric_features]}")
 
         # Make predictions using the model
-        predictions = model.predict_proba(input_df)[:, 1]  # Probability of high-risk (class 1)
+        try:
+            predictions = model.predict_proba(input_df)[:, 1]  # Probability of high-risk (class 1)
+        except Exception as e:
+            return jsonify({'error': f'Model prediction error: {str(e)}'}), 400
 
         # Return predictions as JSON
         return jsonify({'risk_probability': predictions.tolist()})
