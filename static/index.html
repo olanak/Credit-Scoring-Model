@@ -6,50 +6,55 @@
     <title>Credit Scoring App</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #eef2f3;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             height: 100vh;
         }
         .container {
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             width: 400px;
             text-align: center;
         }
         h1 {
-            color: #333;
+            color: #007BFF;
+            margin-bottom: 15px;
         }
         form {
-            margin-top: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: 12px;
         }
-        input[type="number"], input[type="text"] {
-            width: 90%;
+        label {
+            text-align: left;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
             padding: 10px;
-            margin: 10px 0;
             border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 14px;
         }
         button {
             background-color: #007BFF;
             color: white;
-            padding: 12px 20px;
+            padding: 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.3s;
+            transition: 0.3s;
         }
         button:hover {
             background-color: #0056b3;
@@ -60,17 +65,23 @@
             font-weight: bold;
         }
         .footer {
-            margin-top: 20px;
-            text-align: center;
+            margin-top: 30px;
             font-size: 14px;
+            text-align: center;
         }
         .footer a {
             color: #007BFF;
             text-decoration: none;
-            margin: 0 10px;
+            margin: 0 5px;
         }
         .footer a:hover {
             text-decoration: underline;
+        }
+        .info {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+            text-align: left;
         }
     </style>
 </head>
@@ -78,43 +89,64 @@
     <div class="container">
         <h1>Credit Scoring App</h1>
         <form id="creditForm">
-            <input type="number" id="amount" placeholder="Total Transaction Amount" required>
-            <input type="number" id="frequency" placeholder="Transaction Frequency" required>
-            <input type="number" id="year" placeholder="Transaction Year" required>
-            <input type="number" id="avg_amount" placeholder="Average Transaction Amount" required>
-            <input type="number" id="std_dev" placeholder="Standard Deviation of Transactions" required>
+            <label for="amount">Total Transaction Amount:</label>
+            <input type="number" id="amount" name="TotalTransactionAmount" required placeholder="Enter total amount spent">
+
+            <label for="frequency">Transaction Frequency:</label>
+            <input type="number" id="frequency" name="TransactionCount" required placeholder="Enter number of transactions">
+
+            <label for="year">Transaction Year:</label>
+            <input type="number" id="year" name="TransactionYear" required placeholder="Enter year of transactions">
+
+            <label for="avg_amount">Average Transaction Amount:</label>
+            <input type="number" id="avg_amount" name="AverageTransactionAmount" required placeholder="Enter average transaction value">
+
+            <label for="std_dev">Standard Deviation of Transaction Amounts:</label>
+            <input type="number" id="std_dev" name="StdDevTransactionAmount" required placeholder="Enter transaction amount variability">
+            <div class="info">ℹ️ Standard deviation measures how much transaction amounts vary. Calculate it using past transaction data.</div>
+
             <button type="submit">Get Credit Score</button>
         </form>
         <div class="result" id="result"></div>
     </div>
+
     <div class="footer">
-        <p>Developed by Olana Kenea</p>
+        <p>Developed by <strong>Olana Kenea</strong></p>
         <p>
-            <a href="https://www.linkedin.com/in/olana-kenea" target="_blank">LinkedIn</a> |
-            <a href="https://github.com/olana-kenea" target="_blank">GitHub</a>
+            <a href="https://linkedin.com/in/your-profile" target="_blank">LinkedIn</a> |
+            <a href="https://github.com/your-github" target="_blank">GitHub</a>
         </p>
     </div>
+
     <script>
         document.getElementById('creditForm').addEventListener('submit', function(event) {
             event.preventDefault();
+
+            // Get input values
             const amount = parseFloat(document.getElementById('amount').value);
             const frequency = parseFloat(document.getElementById('frequency').value);
             const year = parseInt(document.getElementById('year').value);
             const avg_amount = parseFloat(document.getElementById('avg_amount').value);
             const std_dev = parseFloat(document.getElementById('std_dev').value);
+
+            // Prepare API data
             const inputData = {
                 TotalTransactionAmount: amount,
                 AverageTransactionAmount: avg_amount,
                 TransactionCount: frequency,
                 StdDevTransactionAmount: std_dev,
                 TransactionYear: year,
-                ProductCategory_financial_services_woe: 0,
-                ChannelId_ChannelId_3_woe: 0,
-                ProviderId_encoded_woe: 0
+                ProductCategory_financial_services_woe: 0, // Placeholder
+                ChannelId_ChannelId_3_woe: 0, // Placeholder
+                ProviderId_encoded_woe: 0 // Placeholder
             };
+
+            // Call API
             fetch('https://your-api-url-on-render.com/predict', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify([inputData])
             })
             .then(response => response.json())
