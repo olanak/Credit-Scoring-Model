@@ -28,7 +28,7 @@ if not os.path.exists(scaler_path):
 model = joblib.load(model_path)
 scaler = joblib.load(scaler_path)
 
-# Root route to confirm the API is live
+# Root route to confirm API is live
 @app.route('/', methods=['GET'])
 def home():
     return "Credit Scoring API is live! Use /predict to make predictions."
@@ -49,7 +49,7 @@ def predict():
             'StdDevTransactionAmount', 'TransactionYear'
         ]
 
-        # Ensure all required features exist in the input data
+        # Check for missing features
         missing_features = [feat for feat in numeric_features if feat not in input_df.columns]
         if missing_features:
             return jsonify({'error': f'Missing required features: {missing_features}'}), 400
