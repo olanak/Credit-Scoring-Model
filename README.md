@@ -119,7 +119,7 @@ To run the project locally, follow these steps:
 
 ## **Usage**
 ### **Frontend**
-- Access the application via the deployed URL (e.g., `https://credit-scoring-app.onrender.com`).
+- Access the application via the deployed URL (e.g., `https://credit-scoring-model-dt0k.onrender.com/`).
 - Enter transaction-related details (e.g., total transaction amount, frequency, year, etc.) and submit the form.
 - The app will display the predicted credit risk probability and classification (low-risk or high-risk).
 
@@ -208,7 +208,7 @@ This project was developed as part of the 10 Academy Week 6 Challenge. Contribut
 
 ## **Contact**
 For questions or feedback, feel free to reach out:
-- Email: your-email@example.com
+- Email: olanakenea6@gmail.com 
 - LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/in/olana-kenea)
 
 ---
