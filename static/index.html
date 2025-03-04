@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Scoring App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Credit Scoring App</h1>
+        <form id="creditForm">
+            <label for="amount">Total Transaction Amount:</label>
+            <input type="number" id="amount" name="TotalTransactionAmount" required>
+
+            <label for="frequency">Transaction Frequency:</label>
+            <input type="number" id="frequency" name="TransactionCount" required>
+
+            <label for="year">Transaction Year:</label>
+            <input type="number" id="year" name="TransactionYear" required>
+
+            <label for="avg_amount">Average Transaction Amount:</label>
+            <input type="number" id="avg_amount" name="AverageTransactionAmount" required>
+
+            <label for="std_dev">Standard Deviation of Transaction Amounts:</label>
+            <input type="number" id="std_dev" name="StdDevTransactionAmount" required>
+
+            <button type="submit">Get Credit Score</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById('creditForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get input values
+            const amount = parseFloat(document.getElementById('amount').value);
+            const frequency = parseFloat(document.getElementById('frequency').value);
+            const year = parseInt(document.getElementById('year').value);
+            const avg_amount = parseFloat(document.getElementById('avg_amount').value);
+            const std_dev = parseFloat(document.getElementById('std_dev').value);
+
+            // Prepare data for API call
+            const inputData = {
+                TotalTransactionAmount: amount,
+                AverageTransactionAmount: avg_amount,
+                TransactionCount: frequency,
+                StdDevTransactionAmount: std_dev,
+                TransactionYear: year,
+                ProductCategory_financial_services_woe: 0, // Placeholder; adjust as needed
+                ChannelId_ChannelId_3_woe: 0, // Placeholder; adjust as needed
+                ProviderId_encoded_woe: 0 // Placeholder; adjust as needed
+            };
+
+            // Make API call
+            fetch('https://your-api-url-on-render.com/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify([inputData])
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('result').textContent = `Error: ${data.error}`;
+                    document.getElementById('result').style.color = 'red';
+                } else {
+                    const riskProbability = data.risk_probability[0];
+                    const resultText = riskProbability > 0.5 ? 'High Risk' : 'Low Risk';
+                    document.getElementById('result').textContent = `Credit Risk: ${resultText} (${riskProbability.toFixed(2)})`;
+                    document.getElementById('result').style.color = riskProbability > 0.5 ? 'red' : 'green';
+                }
+            })
+            .catch(error => {
+                document.getElementById('result').textContent = `Error: ${error}`;
+                document.getElementById('result').style.color = 'red';
+            });
+        });
+    </script>
+</body>
+</html>
