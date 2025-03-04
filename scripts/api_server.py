@@ -5,6 +5,7 @@ import gdown
 import os
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import StandardScaler
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -49,16 +50,16 @@ def predict():
             'StdDevTransactionAmount', 'TransactionYear'
         ]
 
-        # Check for missing features
+        # Check for missing features in the input data
         missing_features = [feat for feat in numeric_features if feat not in input_df.columns]
         if missing_features:
             return jsonify({'error': f'Missing required features: {missing_features}'}), 400
 
-        # Scale numeric features
+        # Scale numeric features using the scaler
         if scaler:
             input_df[numeric_features] = scaler.transform(input_df[numeric_features])
 
-        # Make predictions
+        # Make predictions using the model
         predictions = model.predict_proba(input_df)[:, 1]  # Probability of high-risk (class 1)
 
         # Return predictions as JSON
