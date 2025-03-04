@@ -9,39 +9,31 @@ import numpy as np
 # Initialize Flask app
 app = Flask(__name__)
 
-# Google Drive URLs for model and scaler
-MODEL_URL = "https://drive.google.com/uc?id=1TV29ZdUREXSB3rnX1mxbiLeKnV1H9BTj"  # Replace with your model file ID
-SCALER_URL = "https://drive.google.com/uc?id=1IsZ3ed0tGfjnK_wnrSFyrFaX_bN9Msoc"  # Replace with your scaler file ID
+# Load the model and scaler from Google Drive
+MODEL_URL = "https://drive.google.com/uc?id=1TV29ZdUREXSB3rnX1mxbiLeKnV1H9BTj"
+SCALER_URL = "https://drive.google.com/uc?id=1IsZ3ed0tGfjnK_wnrSFyrFaX_bN9Msoc"
 
-# Paths to store downloaded files
-MODEL_PATH = "best_random_forest_model.pkl"
-SCALER_PATH = "scaler.pkl"
+# Define paths for model and scaler
+model_path = "best_random_forest_model.pkl"
+scaler_path = "scaler.pkl"
 
-# Function to download a file if it doesn't exist
-def download_file(url, path):
-    if not os.path.exists(path):
-        print(f"Downloading {path}...")
-        try:
-            gdown.download(url, path, quiet=False)
-            print(f"Downloaded {path} successfully!")
-        except Exception as e:
-            print(f"Error downloading {path}: {str(e)}")
-            exit(1)  # Stop execution if download fails
+# Download the model and scaler if not already present
+if not os.path.exists(model_path):
+    gdown.download(MODEL_URL, model_path, quiet=False)
 
-# Download model and scaler if not present
-download_file(MODEL_URL, MODEL_PATH)
-download_file(SCALER_URL, SCALER_PATH)
+if not os.path.exists(scaler_path):
+    gdown.download(SCALER_URL, scaler_path, quiet=False)
 
 # Load the model and scaler
-try:
-    model = joblib.load(MODEL_PATH)
-    scaler = joblib.load(SCALER_PATH)
-    print("Model and scaler loaded successfully!")
-except Exception as e:
-    print(f"Error loading model/scaler: {str(e)}")
-    exit(1)
+model = joblib.load(model_path)
+scaler = joblib.load(scaler_path)
 
-# Define prediction endpoint
+# Root route to confirm the API is live
+@app.route('/', methods=['GET'])
+def home():
+    return "Credit Scoring API is live! Use /predict to make predictions."
+
+# Prediction endpoint
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
@@ -77,6 +69,6 @@ def predict():
 
 
 if __name__ == '__main__':
-    # Run the Flask app on Render's port or locally
+    # Run the Flask app on the specified port
     PORT = int(os.environ.get('PORT', 5000))
     app.run(debug=False, host='0.0.0.0', port=PORT)
