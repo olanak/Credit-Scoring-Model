@@ -7,19 +7,20 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #eef2f3;
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
         .container {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 400px;
             text-align: center;
         }
@@ -28,21 +29,27 @@
         }
         form {
             margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         input[type="number"], input[type="text"] {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 16px;
         }
         button {
             background-color: #007BFF;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
         }
         button:hover {
             background-color: #0056b3;
@@ -50,7 +57,20 @@
         .result {
             margin-top: 20px;
             font-size: 18px;
-            color: green;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #007BFF;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -58,56 +78,43 @@
     <div class="container">
         <h1>Credit Scoring App</h1>
         <form id="creditForm">
-            <label for="amount">Total Transaction Amount:</label>
-            <input type="number" id="amount" name="TotalTransactionAmount" required>
-
-            <label for="frequency">Transaction Frequency:</label>
-            <input type="number" id="frequency" name="TransactionCount" required>
-
-            <label for="year">Transaction Year:</label>
-            <input type="number" id="year" name="TransactionYear" required>
-
-            <label for="avg_amount">Average Transaction Amount:</label>
-            <input type="number" id="avg_amount" name="AverageTransactionAmount" required>
-
-            <label for="std_dev">Standard Deviation of Transaction Amounts:</label>
-            <input type="number" id="std_dev" name="StdDevTransactionAmount" required>
-
+            <input type="number" id="amount" placeholder="Total Transaction Amount" required>
+            <input type="number" id="frequency" placeholder="Transaction Frequency" required>
+            <input type="number" id="year" placeholder="Transaction Year" required>
+            <input type="number" id="avg_amount" placeholder="Average Transaction Amount" required>
+            <input type="number" id="std_dev" placeholder="Standard Deviation of Transactions" required>
             <button type="submit">Get Credit Score</button>
         </form>
         <div class="result" id="result"></div>
     </div>
-
+    <div class="footer">
+        <p>Developed by Olana Kenea</p>
+        <p>
+            <a href="https://www.linkedin.com/in/olana-kenea" target="_blank">LinkedIn</a> |
+            <a href="https://github.com/olana-kenea" target="_blank">GitHub</a>
+        </p>
+    </div>
     <script>
-        // Handle form submission
         document.getElementById('creditForm').addEventListener('submit', function(event) {
             event.preventDefault();
-
-            // Get input values
             const amount = parseFloat(document.getElementById('amount').value);
             const frequency = parseFloat(document.getElementById('frequency').value);
             const year = parseInt(document.getElementById('year').value);
             const avg_amount = parseFloat(document.getElementById('avg_amount').value);
             const std_dev = parseFloat(document.getElementById('std_dev').value);
-
-            // Prepare data for API call
             const inputData = {
                 TotalTransactionAmount: amount,
                 AverageTransactionAmount: avg_amount,
                 TransactionCount: frequency,
                 StdDevTransactionAmount: std_dev,
                 TransactionYear: year,
-                ProductCategory_financial_services_woe: 0, // Placeholder; adjust as needed
-                ChannelId_ChannelId_3_woe: 0, // Placeholder; adjust as needed
-                ProviderId_encoded_woe: 0 // Placeholder; adjust as needed
+                ProductCategory_financial_services_woe: 0,
+                ChannelId_ChannelId_3_woe: 0,
+                ProviderId_encoded_woe: 0
             };
-
-            // Make API call
             fetch('https://your-api-url-on-render.com/predict', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify([inputData])
             })
             .then(response => response.json())
