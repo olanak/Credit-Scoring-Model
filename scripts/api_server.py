@@ -57,7 +57,8 @@ def predict():
 
         # Scale numeric features using the scaler
         if scaler:
-            input_df[numeric_features] = scaler.transform(input_df[numeric_features])
+            # Ensure the input is in the correct shape for scaling
+            input_df[numeric_features] = scaler.transform(input_df[numeric_features].values.reshape(-1, len(numeric_features)))
 
         # Make predictions using the model
         predictions = model.predict_proba(input_df)[:, 1]  # Probability of high-risk (class 1)
