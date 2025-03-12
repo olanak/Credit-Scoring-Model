@@ -209,7 +209,7 @@ This project was developed as part of the 10 Academy Week 6 Challenge. Contribut
 ## **Contact**
 For questions or feedback, feel free to reach out:
 - Email: olanakenea6@gmail.com 
-- LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/in/olana-kenea)
+- LinkedIn: [Linked Profile](https://www.linkedin.com/in/olana-kenea)
 
 ---
 
